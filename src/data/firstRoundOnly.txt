@@ -1,0 +1,177 @@
+11/28/2021 - 20:41:11: World triggered "Match_Start" on "de_nuke"
+11/28/2021 - 20:41:11: Team playing "CT": TeamVitality
+11/28/2021 - 20:41:11: Team playing "TERRORIST": NAVI GGBET
+11/28/2021 - 20:41:11: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" picked up "c4"
+11/28/2021 - 20:41:11: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" triggered "Got_The_Bomb"
+11/28/2021 - 20:41:11: MatchStatus: Team playing "CT": TeamVitality
+11/28/2021 - 20:41:11: MatchStatus: Team playing "TERRORIST": NAVI GGBET
+11/28/2021 - 20:41:11: MatchStatus: Score: 0:0 on map "de_nuke" RoundsPlayed: 0
+11/28/2021 - 20:41:11: "b1t<13><STEAM_1:0:143170874><TERRORIST>" money change 800-300 = $500 (tracked) (purchase: weapon_p250)
+11/28/2021 - 20:41:11: "b1t<32><STEAM_1:0:143170874><TERRORIST>" dropped "glock"
+11/28/2021 - 20:41:11: "b1t<32><STEAM_1:0:143170874><TERRORIST>" picked up "p250"
+11/28/2021 - 20:41:11: "b1t<32><STEAM_1:0:143170874><TERRORIST>" purchased "p250"
+11/28/2021 - 20:41:12: "b1t<13><STEAM_1:0:143170874><TERRORIST>" money change 500-400 = $100 (tracked) (purchase: weapon_molotov)
+11/28/2021 - 20:41:12: "b1t<32><STEAM_1:0:143170874><TERRORIST>" picked up "molotov"
+11/28/2021 - 20:41:12: "b1t<32><STEAM_1:0:143170874><TERRORIST>" purchased "molotov"
+11/28/2021 - 20:41:13: "electronic<12><STEAM_1:1:41889689><TERRORIST>" money change 800-300 = $500 (tracked) (purchase: weapon_smokegrenade)
+11/28/2021 - 20:41:13: "electronic<31><STEAM_1:1:41889689><TERRORIST>" picked up "smokegrenade"
+11/28/2021 - 20:41:13: "electronic<31><STEAM_1:1:41889689><TERRORIST>" purchased "smokegrenade"
+11/28/2021 - 20:41:13: "electronic<12><STEAM_1:1:41889689><TERRORIST>" money change 500-300 = $200 (tracked) (purchase: weapon_hegrenade)
+11/28/2021 - 20:41:13: "electronic<31><STEAM_1:1:41889689><TERRORIST>" picked up "hegrenade"
+11/28/2021 - 20:41:13: "electronic<31><STEAM_1:1:41889689><TERRORIST>" purchased "hegrenade"
+11/28/2021 - 20:41:13: "electronic<12><STEAM_1:1:41889689><TERRORIST>" money change 200-200 = $0 (tracked) (purchase: weapon_flashbang)
+11/28/2021 - 20:41:13: "electronic<31><STEAM_1:1:41889689><TERRORIST>" picked up "flashbang"
+11/28/2021 - 20:41:13: "electronic<31><STEAM_1:1:41889689><TERRORIST>" purchased "flashbang"
+11/28/2021 - 20:41:13: "shox <33><STEAM_1:1:23327283><CT>" say "hfhfhf"
+11/28/2021 - 20:41:15: "shox <33><STEAM_1:1:23327283><CT>" picked up "vest"
+11/28/2021 - 20:41:15: "shox <14><STEAM_1:1:23327283><CT>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:15: "shox <33><STEAM_1:1:23327283><CT>" purchased "item_kevlar"
+11/28/2021 - 20:41:15: "misutaaa<24><STEAM_1:1:60631591><CT>" picked up "vest"
+11/28/2021 - 20:41:15: "misutaaa<5><STEAM_1:1:60631591><CT>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:15: "misutaaa<24><STEAM_1:1:60631591><CT>" purchased "item_kevlar"
+11/28/2021 - 20:41:16: "b1t<32><STEAM_1:0:143170874><TERRORIST>" dropped "p250"
+11/28/2021 - 20:41:16: "b1t<32><STEAM_1:0:143170874><TERRORIST>" picked up "glock"
+11/28/2021 - 20:41:17: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" picked up "vest"
+11/28/2021 - 20:41:17: "Perfecto<9><STEAM_1:0:80477379><TERRORIST>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:17: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" purchased "item_kevlar"
+11/28/2021 - 20:41:18: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" dropped "glock"
+11/28/2021 - 20:41:19: "electronic<31><STEAM_1:1:41889689><TERRORIST>" dropped "hegrenade"
+11/28/2021 - 20:41:19: "b1t<32><STEAM_1:0:143170874><TERRORIST>" dropped "molotov"
+11/28/2021 - 20:41:19: "electronic<31><STEAM_1:1:41889689><TERRORIST>" picked up "molotov"
+11/28/2021 - 20:41:19: "apEX<25><STEAM_1:1:14739219><CT>" picked up "vest"
+11/28/2021 - 20:41:19: "apEX<6><STEAM_1:1:14739219><CT>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:19: "apEX<25><STEAM_1:1:14739219><CT>" purchased "item_kevlar"
+11/28/2021 - 20:41:20: "b1t<32><STEAM_1:0:143170874><TERRORIST>" picked up "hegrenade"
+11/28/2021 - 20:41:20: "ZywOo<26><STEAM_1:1:76700232><CT>" picked up "vest"
+11/28/2021 - 20:41:20: "ZywOo<7><STEAM_1:1:76700232><CT>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:20: "ZywOo<26><STEAM_1:1:76700232><CT>" purchased "item_kevlar"
+11/28/2021 - 20:41:20: "Kyojin<34><STEAM_1:1:22851120><CT>" picked up "vest"
+11/28/2021 - 20:41:20: "Kyojin<8><STEAM_1:1:22851120><CT>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:20: "Kyojin<34><STEAM_1:1:22851120><CT>" purchased "item_kevlar"
+11/28/2021 - 20:41:20: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" triggered "Dropped_The_Bomb"
+11/28/2021 - 20:41:20: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" dropped "c4"
+11/28/2021 - 20:41:21: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" picked up "c4"
+11/28/2021 - 20:41:21: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" triggered "Got_The_Bomb"
+11/28/2021 - 20:41:22: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" picked up "vest"
+11/28/2021 - 20:41:22: "Boombl4<10><STEAM_1:0:92970669><TERRORIST>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:22: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" purchased "item_kevlar"
+11/28/2021 - 20:41:23: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" picked up "p250"
+11/28/2021 - 20:41:23: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" picked up "vest"
+11/28/2021 - 20:41:23: "s1mple<11><STEAM_1:1:36968273><TERRORIST>" money change 800-650 = $150 (tracked) (purchase: item_kevlar)
+11/28/2021 - 20:41:23: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" purchased "item_kevlar"
+11/28/2021 - 20:41:24: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" triggered "Dropped_The_Bomb"
+11/28/2021 - 20:41:24: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" dropped "c4"
+11/28/2021 - 20:41:24: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" picked up "c4"
+11/28/2021 - 20:41:24: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" triggered "Got_The_Bomb"
+11/28/2021 - 20:41:25: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" say_team "5"
+11/28/2021 - 20:41:25: "b1t<32><STEAM_1:0:143170874><TERRORIST>" say "hf"
+11/28/2021 - 20:41:26: "electronic<31><STEAM_1:1:41889689><TERRORIST>" say_team "5"
+11/28/2021 - 20:41:26: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" say_team "5"
+11/28/2021 - 20:41:26: "b1t<32><STEAM_1:0:143170874><TERRORIST>" say_team "5"
+11/28/2021 - 20:41:27: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" say_team "5"
+11/28/2021 - 20:41:27: "electronic<31><STEAM_1:1:41889689><TERRORIST>" say "hF"
+11/28/2021 - 20:41:27: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" say_team "5"
+11/28/2021 - 20:41:29: "Kyojin<34><STEAM_1:1:22851120><CT>" say "hf"
+11/28/2021 - 20:41:31: World triggered "Round_Start"
+11/28/2021 - 20:41:31: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-1874 -1076 -417] killed other "func_breakable<457>" [406 -1198 121] with "glock"
+11/28/2021 - 20:41:31: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-1841 -1112 -416] killed other "func_breakable<458>" [406 -1114 121] with "glock"
+11/28/2021 - 20:41:32: "b1t<32><STEAM_1:0:143170874><TERRORIST>" left buyzone with [ weapon_knife_m9_bayonet weapon_glock weapon_hegrenade ]
+11/28/2021 - 20:41:32: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" left buyzone with [ weapon_knife_outdoor weapon_p250 kevlar(100) ]
+11/28/2021 - 20:41:32: "electronic<31><STEAM_1:1:41889689><TERRORIST>" left buyzone with [ weapon_bayonet weapon_glock weapon_smokegrenade weapon_molotov weapon_flashbang ]
+11/28/2021 - 20:41:32: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" left buyzone with [ weapon_knife_survival_bowie weapon_glock kevlar(100) ]
+11/28/2021 - 20:41:32: "shox <33><STEAM_1:1:23327283><CT>" left buyzone with [ weapon_knife_m9_bayonet weapon_usp_silencer kevlar(100) ]
+11/28/2021 - 20:41:32: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-1635 -1151 -417] killed other "func_breakable<463>" [406 -686 121] with "glock"
+11/28/2021 - 20:41:33: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-1513 -1141 -420] killed other "func_breakable<464>" [406 -602 121] with "glock"
+11/28/2021 - 20:41:33: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" left buyzone with [ weapon_knife_m9_bayonet weapon_glock weapon_c4 kevlar(100) C4 ]
+11/28/2021 - 20:41:33: "misutaaa<24><STEAM_1:1:60631591><CT>" left buyzone with [ weapon_knife_butterfly weapon_usp_silencer kevlar(100) ]
+11/28/2021 - 20:41:33: "ZywOo<26><STEAM_1:1:76700232><CT>" left buyzone with [ weapon_knife_flip weapon_usp_silencer kevlar(100) ]
+11/28/2021 - 20:41:33: "Kyojin<34><STEAM_1:1:22851120><CT>" left buyzone with [ weapon_knife_butterfly weapon_usp_silencer kevlar(100) ]
+11/28/2021 - 20:41:33: "apEX<25><STEAM_1:1:14739219><CT>" left buyzone with [ weapon_knife_m9_bayonet weapon_usp_silencer kevlar(100) ]
+11/28/2021 - 20:41:37: "electronic<31><STEAM_1:1:41889689><TERRORIST>" dropped "smokegrenade"
+11/28/2021 - 20:41:38: "b1t<32><STEAM_1:0:143170874><TERRORIST>" dropped "hegrenade"
+11/28/2021 - 20:41:40: "b1t<32><STEAM_1:0:143170874><TERRORIST>" threw hegrenade [252 -1340 -414]
+11/28/2021 - 20:41:40: "b1t<32><STEAM_1:0:143170874><TERRORIST>" [-65 -1132 -416] killed other "prop_door_rotating<417>" [257 -1310 -416] with "hegrenade"
+11/28/2021 - 20:41:42: Molotov projectile spawned at -385.163635 -1161.833130 -61.380161, velocity 974.604736 25.044682 356.387726
+11/28/2021 - 20:41:42: "electronic<31><STEAM_1:1:41889689><TERRORIST>" dropped "molotov"
+11/28/2021 - 20:41:43: "apEX<25><STEAM_1:1:14739219><CT>" [1013 -384 -128] killed other "prop_dynamic<213>" [448 -1403 -416] with "usp_silencer"
+11/28/2021 - 20:41:43: "electronic<31><STEAM_1:1:41889689><TERRORIST>" threw smokegrenade [483 -1299 -414]
+11/28/2021 - 20:41:44: "electronic<31><STEAM_1:1:41889689><TERRORIST>" threw molotov [407 -1132 -187]
+11/28/2021 - 20:41:46: "electronic<31><STEAM_1:1:41889689><TERRORIST>" dropped "flashbang"
+11/28/2021 - 20:41:47: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [272 -1610 -40] attacked "shox <33><STEAM_1:1:23327283><CT>" [1421 -1566 -288] with "glock" (damage "9") (damage_armor "5") (health "91") (armor "94") (hitgroup "chest")
+11/28/2021 - 20:41:48: "electronic<31><STEAM_1:1:41889689><TERRORIST>" threw flashbang [485 -1176 -31] flashbang entindex 214)
+11/28/2021 - 20:41:48: "apEX<25><STEAM_1:1:14739219><CT>" blinded for 3.65 by "electronic<31><STEAM_1:1:41889689><TERRORIST>" from flashbang entindex 214 
+11/28/2021 - 20:41:48: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [223 -1551 -35] attacked "ZywOo<26><STEAM_1:1:76700232><CT>" [1183 -1948 -416] with "glock" (damage "9") (damage_armor "5") (health "91") (armor "94") (hitgroup "chest")
+11/28/2021 - 20:41:48: "ZywOo<26><STEAM_1:1:76700232><CT>" [1189 -1878 -416] attacked "s1mple<30><STEAM_1:1:36968273><TERRORIST>" [184 -2133 -416] with "hkp2000" (damage "14") (damage_armor "7") (health "86") (armor "92") (hitgroup "chest")
+11/28/2021 - 20:41:49: "ZywOo<26><STEAM_1:1:76700232><CT>" [1186 -1862 -416] attacked "s1mple<30><STEAM_1:1:36968273><TERRORIST>" [181 -2121 -416] with "hkp2000" (damage "115") (damage_armor "0") (health "0") (armor "92") (hitgroup "head")
+11/28/2021 - 20:41:49: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" dropped "p250"
+11/28/2021 - 20:41:49: "s1mple<30><STEAM_1:1:36968273><TERRORIST>" dropped "knife"
+11/28/2021 - 20:41:49: "ZywOo<26><STEAM_1:1:76700232><CT>" [1186 -1862 -416] killed "s1mple<30><STEAM_1:1:36968273><TERRORIST>" [181 -2121 -370] with "usp_silencer" (headshot)
+11/28/2021 - 20:41:49: "ZywOo<7><STEAM_1:1:76700232><CT>" money change 150+300 = $450 (tracked)
+11/28/2021 - 20:41:49: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" [152 -2079 -416] attacked "ZywOo<26><STEAM_1:1:76700232><CT>" [1186 -1862 -416] with "glock" (damage "10") (damage_armor "5") (health "81") (armor "88") (hitgroup "chest")
+11/28/2021 - 20:41:49: "ZywOo<26><STEAM_1:1:76700232><CT>" [1186 -1861 -416] attacked "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" [151 -2074 -416] with "hkp2000" (damage "115") (damage_armor "0") (health "0") (armor "100") (hitgroup "head")
+11/28/2021 - 20:41:49: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" triggered "Dropped_The_Bomb"
+11/28/2021 - 20:41:49: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" dropped "c4"
+11/28/2021 - 20:41:49: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" dropped "glock"
+11/28/2021 - 20:41:49: "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" dropped "knife"
+11/28/2021 - 20:41:49: "ZywOo<26><STEAM_1:1:76700232><CT>" [1186 -1861 -416] killed "Perfecto<28><STEAM_1:0:80477379><TERRORIST>" [151 -2074 -352] with "usp_silencer" (headshot)
+11/28/2021 - 20:41:49: "ZywOo<7><STEAM_1:1:76700232><CT>" money change 450+300 = $750 (tracked)
+11/28/2021 - 20:41:50: "shox <33><STEAM_1:1:23327283><CT>" [1768 -1510 -416] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [238 -1655 -31] with "hkp2000" (damage "13") (damage_armor "6") (health "87") (armor "93") (hitgroup "right arm")
+11/28/2021 - 20:41:50: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [237 -1640 -31] attacked "shox <33><STEAM_1:1:23327283><CT>" [1768 -1509 -416] with "glock" (damage "8") (damage_armor "4") (health "83") (armor "89") (hitgroup "chest")
+11/28/2021 - 20:41:50: "shox <33><STEAM_1:1:23327283><CT>" [1768 -1518 -416] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [236 -1619 -31] with "hkp2000" (damage "16") (damage_armor "8") (health "71") (armor "84") (hitgroup "stomach")
+11/28/2021 - 20:41:51: "ZywOo<26><STEAM_1:1:76700232><CT>" [1172 -1907 -416] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [234 -1593 -32] with "hkp2000" (damage "14") (damage_armor "7") (health "57") (armor "76") (hitgroup "chest")
+11/28/2021 - 20:41:51: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [228 -1581 -32] attacked "shox <33><STEAM_1:1:23327283><CT>" [1767 -1505 -416] with "glock" (damage "13") (damage_armor "0") (health "70") (armor "89") (hitgroup "right leg")
+11/28/2021 - 20:41:51: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [227 -1564 -34] attacked "shox <33><STEAM_1:1:23327283><CT>" [1768 -1521 -416] with "glock" (damage "10") (damage_armor "5") (health "60") (armor "83") (hitgroup "stomach")
+11/28/2021 - 20:41:57: "ZywOo<26><STEAM_1:1:76700232><CT>" [564 -2355 -416] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-351 -1595 -416] with "hkp2000" (damage "14") (damage_armor "6") (health "43") (armor "69") (hitgroup "chest")
+11/28/2021 - 20:42:05: "ZywOo<26><STEAM_1:1:76700232><CT>" [788 -2306 -416] attacked "b1t<32><STEAM_1:0:143170874><TERRORIST>" [1407 -2389 -477] with "hkp2000" (damage "124") (damage_armor "0") (health "0") (armor "0") (hitgroup "head")
+11/28/2021 - 20:42:05: "b1t<32><STEAM_1:0:143170874><TERRORIST>" dropped "glock"
+11/28/2021 - 20:42:05: "b1t<32><STEAM_1:0:143170874><TERRORIST>" dropped "knife"
+11/28/2021 - 20:42:05: "ZywOo<26><STEAM_1:1:76700232><CT>" [788 -2306 -416] killed "b1t<32><STEAM_1:0:143170874><TERRORIST>" [1407 -2389 -413] with "usp_silencer" (headshot)
+11/28/2021 - 20:42:05: "ZywOo<7><STEAM_1:1:76700232><CT>" money change 750+300 = $1050 (tracked)
+11/28/2021 - 20:42:09: "misutaaa<24><STEAM_1:1:60631591><CT>" [989 -550 -603] killed other "func_breakable<209>" [1040 -560 -560] with "knife_butterfly"
+11/28/2021 - 20:42:15: "ZywOo<26><STEAM_1:1:76700232><CT>" [702 -2361 -416] attacked "electronic<31><STEAM_1:1:41889689><TERRORIST>" [1413 -2429 -481] with "hkp2000" (damage "30") (damage_armor "0") (health "65") (armor "0") (hitgroup "chest")
+11/28/2021 - 20:42:16: "electronic<31><STEAM_1:1:41889689><TERRORIST>" [1415 -2416 -482] attacked "ZywOo<26><STEAM_1:1:76700232><CT>" [702 -2364 -416] with "glock" (damage "95") (damage_armor "0") (health "0") (armor "88") (hitgroup "head")
+11/28/2021 - 20:42:16: "ZywOo<26><STEAM_1:1:76700232><CT>" dropped "hkp2000"
+11/28/2021 - 20:42:16: "ZywOo<26><STEAM_1:1:76700232><CT>" dropped "knife"
+11/28/2021 - 20:42:16: "electronic<31><STEAM_1:1:41889689><TERRORIST>" [1415 -2416 -482] killed "ZywOo<26><STEAM_1:1:76700232><CT>" [702 -2364 -352] with "glock" (headshot)
+11/28/2021 - 20:42:16: "electronic<12><STEAM_1:1:41889689><TERRORIST>" money change 0+300 = $300 (tracked)
+11/28/2021 - 20:42:17: "shox <33><STEAM_1:1:23327283><CT>" [1121 -2439 -416] attacked "electronic<31><STEAM_1:1:41889689><TERRORIST>" [1468 -2432 -518] with "hkp2000" (damage "131") (damage_armor "0") (health "0") (armor "0") (hitgroup "head")
+11/28/2021 - 20:42:17: "electronic<31><STEAM_1:1:41889689><TERRORIST>" dropped "glock"
+11/28/2021 - 20:42:17: "electronic<31><STEAM_1:1:41889689><TERRORIST>" dropped "knife"
+11/28/2021 - 20:42:17: "shox <33><STEAM_1:1:23327283><CT>" [1121 -2439 -416] killed "electronic<31><STEAM_1:1:41889689><TERRORIST>" [1468 -2432 -454] with "usp_silencer" (headshot)
+11/28/2021 - 20:42:17: "shox <14><STEAM_1:1:23327283><CT>" money change 150+300 = $450 (tracked)
+11/28/2021 - 20:42:21: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-6 -1843 -40] attacked "shox <33><STEAM_1:1:23327283><CT>" [592 -2130 -329] with "glock" (damage "95") (damage_armor "0") (health "0") (armor "83") (hitgroup "head")
+11/28/2021 - 20:42:21: "shox <33><STEAM_1:1:23327283><CT>" dropped "hkp2000"
+11/28/2021 - 20:42:21: "shox <33><STEAM_1:1:23327283><CT>" dropped "knife"
+11/28/2021 - 20:42:21: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-6 -1843 -40] killed "shox <33><STEAM_1:1:23327283><CT>" [592 -2130 -265] with "glock" (headshot)
+11/28/2021 - 20:42:21: "Boombl4<10><STEAM_1:0:92970669><TERRORIST>" money change 150+300 = $450 (tracked)
+11/28/2021 - 20:42:25: "ZywOo<26><STEAM_1:1:76700232><CT>" say_team "mdrrr"
+11/28/2021 - 20:42:27: "shox <33><STEAM_1:1:23327283><CT>" say_team "AHHAHAHAHA"
+11/28/2021 - 20:42:28: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" picked up "c4"
+11/28/2021 - 20:42:28: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" triggered "Got_The_Bomb"
+11/28/2021 - 20:42:29: "ZywOo<26><STEAM_1:1:76700232><CT>" say_team "je taime"
+11/28/2021 - 20:42:29: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" dropped "glock"
+11/28/2021 - 20:42:29: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" picked up "glock"
+11/28/2021 - 20:42:31: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [153 -2114 -416] attacked "Kyojin<34><STEAM_1:1:22851120><CT>" [922 -1829 -416] with "glock" (damage "92") (damage_armor "0") (health "8") (armor "100") (hitgroup "head")
+11/28/2021 - 20:42:32: Your server needs to be restarted in order to receive the latest update.
+11/28/2021 - 20:42:33: "shox <33><STEAM_1:1:23327283><CT>" say_team "bj frérot chaud"
+11/28/2021 - 20:42:36: "shox <33><STEAM_1:1:23327283><CT>" say_team "t chaud"
+11/28/2021 - 20:42:41: "apEX<25><STEAM_1:1:14739219><CT>" [49 -1325 -416] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-397 -845 -416] with "hkp2000" (damage "9") (damage_armor "0") (health "34") (armor "69") (hitgroup "head")
+11/28/2021 - 20:42:45: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [-403 -1021 -416] attacked "apEX<25><STEAM_1:1:14739219><CT>" [270 -1289 -380] with "glock" (damage "17") (damage_armor "0") (health "83") (armor "100") (hitgroup "right leg")
+11/28/2021 - 20:42:57: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [403 -259 -640] attacked "apEX<25><STEAM_1:1:14739219><CT>" [1286 -678 -640] with "glock" (damage "10") (damage_armor "5") (health "73") (armor "94") (hitgroup "right arm")
+11/28/2021 - 20:42:57: "apEX<25><STEAM_1:1:14739219><CT>" [1285 -680 -640] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [403 -261 -640] with "hkp2000" (damage "14") (damage_armor "7") (health "20") (armor "61") (hitgroup "chest")
+11/28/2021 - 20:42:59: "misutaaa<24><STEAM_1:1:60631591><CT>" [400 -1330 -768] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [468 13 -640] with "hkp2000" (damage "13") (damage_armor "6") (health "7") (armor "54") (hitgroup "chest")
+11/28/2021 - 20:43:11: "misutaaa<24><STEAM_1:1:60631591><CT>" [406 -1332 -768] attacked "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [427 -105 -640] with "hkp2000" (damage "17") (damage_armor "8") (health "0") (armor "45") (hitgroup "stomach")
+11/28/2021 - 20:43:11: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" triggered "Dropped_The_Bomb"
+11/28/2021 - 20:43:11: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" dropped "c4"
+11/28/2021 - 20:43:11: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" dropped "glock"
+11/28/2021 - 20:43:11: "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" dropped "knife"
+11/28/2021 - 20:43:11: "misutaaa<24><STEAM_1:1:60631591><CT>" [406 -1332 -768] killed "Boombl4<29><STEAM_1:0:92970669><TERRORIST>" [427 -105 -576] with "usp_silencer"
+11/28/2021 - 20:43:11: "misutaaa<5><STEAM_1:1:60631591><CT>" money change 150+300 = $450 (tracked)
+11/28/2021 - 20:43:11: Team "CT" triggered "SFUI_Notice_CTs_Win" (CT "1") (T "0")
+11/28/2021 - 20:43:11: Team "CT" scored "1" with "5" players
+11/28/2021 - 20:43:11: Team "TERRORIST" scored "0" with "5" players
+11/28/2021 - 20:43:11: MatchStatus: Team playing "CT": TeamVitality
+11/28/2021 - 20:43:11: MatchStatus: Team playing "TERRORIST": NAVI GGBET
+11/28/2021 - 20:43:11: MatchStatus: Score: 1:0 on map "de_nuke" RoundsPlayed: 1
+11/28/2021 - 20:43:11: World triggered "Round_End"
+11/28/2021 - 20:43:11:  [FACEIT^] NAVI GGBET [0 - 1] TeamVitality
