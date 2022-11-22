@@ -25,8 +25,8 @@ const Homepage = () => {
   // Then store it in a state variable as an array of strings
   useEffect(() => {
     //const data = require("../data/firstRoundOnly.txt");
-    const data = require("../data/NAVIvsVitaGF-Nuke.txt");
-    //const data = require("../data/firstRoundOnly.txt"); used for testing and debugging. Leaving it here in case its useful to whoever is reviewing this.
+    // Used for testing and debugging. Leaving it here in case its useful to whoever is reviewing this.
+    const data = require("../data/firstRoundOnly.txt");
     fetch(data)
       .then((response) => response.text())
       .then((text) => setRawData(text.split(/\r\n|\r|\n/)));
@@ -122,12 +122,18 @@ const Homepage = () => {
       }
 
       // Immediately after each round ends, the admin announces the score. This is very convenient, and I take advantage
-      // by using it as the indicator that the round is over and done parsing.
+      // by using it as the indicator that the round is over.
       score = line.match(regexScore)?.toString();
       if (score) {
         currentRound++;
         // The length is stored in seconds
         roundLength = roundStart.until(getTimeOfLine(line), ChronoUnit.SECONDS);
+
+        // Resets the array that keeps track of players damaged this round.
+        auxPlayers = auxPlayers.map((player) => {
+          player.playersDamagedThisRound = [];
+          return player;
+        });
 
         rounds.push(
           new Round(roundLength, ctTeam, terroristTeam, score, winner)
@@ -150,19 +156,33 @@ const Homepage = () => {
   // While this way is slightly less efficient than only checking the pre-match log, it accounts for cases
   // where not all players or spectators are present before the first round (for example, what if they have backups?)
   function processKillLine(line: string, auxPlayers: Player[]) {
-    let playerName = getPlayerNameFromLine(line);
+    const attackerPlayer = getPlayerNameFromLine(line);
 
-    addPlayerIfNotPresent(playerName, auxPlayers);
+    addPlayerIfNotPresent(attackerPlayer, auxPlayers);
 
     // "killed other" indicates the destruction of an object, otherwise a player was killed
     if (line.indexOf("killed other") !== -1) {
       auxPlayers = auxPlayers.map((player) => {
-        if (player.name === playerName) player.objectsDestroyed++;
+        if (player.name === attackerPlayer) player.objectsDestroyed++;
         return player;
       });
     } else {
+      const trimmedLine = line.slice(line.indexOf("killed"), line.length);
+      const attackedPlayer = trimmedLine.slice(8, trimmedLine.indexOf("<"));
+
+      // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously gets and assist.
       auxPlayers = auxPlayers.map((player) => {
-        if (player.name === playerName) player.kills++;
+        if (player.name === attackerPlayer) {
+          player.kills++;
+        } else {
+          if (
+            player.playersDamagedThisRound.some(
+              (previouslyDamaged) => previouslyDamaged === attackedPlayer
+            )
+          ) {
+            player.assists++;
+          }
+        }
         return player;
       });
     }
@@ -172,7 +192,7 @@ const Homepage = () => {
     // However, while the heatmap idea is cool, I think its too long and complex for this challenge
     if (line.indexOf("headshot") !== -1) {
       auxPlayers = auxPlayers.map((player) => {
-        if (player.name === playerName) player.headshots++;
+        if (player.name === attackerPlayer) player.headshots++;
         return player;
       });
     }
@@ -189,10 +209,16 @@ const Homepage = () => {
     addPlayerIfNotPresent(attackedPlayer, auxPlayers);
 
     auxPlayers = auxPlayers.map((player) => {
-      // This is the simplest way to add assists. The problem is that, if a player non lethaly damages another
-      // Then finishes him or her off in a different damage instance, it will count as both a kill and an asssist
-      // I will handle this in the display component, though there is probably a better way of doing this
-      if (player.name === attackerPlayer) player.assists++;
+      if (player.name === attackerPlayer) {
+        if (
+          !player.playersDamagedThisRound.some(
+            (previouslyDamaged) => previouslyDamaged === attackedPlayer
+          )
+        )
+          player.playersDamagedThisRound.push(attackedPlayer);
+
+        return player;
+      }
       return player;
     });
   }
