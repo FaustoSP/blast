@@ -3,3 +3,8 @@
 export function getPlayerNameFromLine(s: string) {
   return s.slice(24, s.indexOf("<"));
 }
+
+// Removes quotes from a string
+export function removeQuotes(s: string) {
+  return s.replace(/['"]+/g, "");
+}

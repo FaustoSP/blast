@@ -2,7 +2,8 @@ import { ChronoUnit, DateTimeFormatter, LocalTime } from "@js-joda/core";
 import { useEffect, useState } from "react";
 import { Player } from "../classes/Player";
 import { Round } from "../classes/Round";
-import { getPlayerNameFromLine } from "../utils/StringUtils";
+import { Weapon } from "../classes/Weapon";
+import { getPlayerNameFromLine, removeQuotes } from "../utils/StringUtils";
 
 // Asumption: the date and time pattern is always MM/dd/yyyy - HH:mm:ss and they are always at the start of a line
 // I think this is an ok assumption to make given that logs should always follow a specific formatting for them to be useful
@@ -19,14 +20,16 @@ const Homepage = () => {
   const [rawData, setRawData] = useState<string[]>([]);
   const [rounds, setRounds] = useState<Round[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
+  // The only thing I care about the spectators is their names, so I'm not adding a whole new class for them.
   const [spectators, setSpectators] = useState<string[]>([]);
+  const [weapons, setWeapons] = useState<Weapon[]>([]);
 
   // We load the data from the txt file, divide it by lines with a regular expression
   // Then store it in a state variable as an array of strings
   useEffect(() => {
     //const data = require("../data/firstRoundOnly.txt");
     // Used for testing and debugging. Leaving it here in case its useful to whoever is reviewing this.
-    const data = require("../data/firstRoundOnly.txt");
+    const data = require("../data/NAVIvsVitaGF-Nuke.txt");
     fetch(data)
       .then((response) => response.text())
       .then((text) => setRawData(text.split(/\r\n|\r|\n/)));
@@ -39,6 +42,10 @@ const Homepage = () => {
       setRounds(rounds);
     }
   }, [rawData]);
+
+  useEffect(() => {
+    console.log(weapons);
+  }, [weapons]);
 
   // As per the hint "There might be multiple “Match_Start” events, but only the last one starts the match for real."
   // So this function eliminates all the lines preceding the last "Match_Start"
@@ -67,8 +74,7 @@ const Homepage = () => {
   }
 
   // Divides the log into rounds. A round is defined as all the lines between "Round_Start" and "Round_End", exclusive in both cases.
-  // At the same time, also parses player statistics. For more efficiency, I tried to minimize the amount of times I
-  // loop through the data.
+  // At the same time, also parses player statistics. I tried to minimize the amount of times I loop through the data.
   // Note: I tried to keep the cognitive complexity of this function as low as realistically possible, but there is room for improvement
   function divideDataByRounds(data: string[]): Round[] {
     let roundLength: number,
@@ -77,13 +83,17 @@ const Homepage = () => {
       terroristTeam: string,
       score: string | undefined,
       winner: string;
+    // The kill feed for each round. See the processKillLine function. Resetted each time a new Round is processed.
+    let killFeedPerRound: string[] = [];
     let roundStart: LocalTime;
-    let rounds: Round[] = [];
+    let auxRounds: Round[] = [];
     let auxPlayers: Player[] = [];
+    let auxWeapons: Weapon[] = [];
+
     // Regular expression used to match the lines where an admin announces the score.
     // Example of a desired math: [FACEIT^] NAVI GGBET [0 - 4] TeamVitality
     // I tried to make it as generic as possible, but a team with a special character, or the score being announced
-    // in a different format could break it. I think its good enough for this code challenge.
+    // in a different format could break it. However, I think its good enough for the code challenge.
     const regexScore = /[A-Za-z0-9]+\s\[[0-9]+\s-\s[0-9]+\]\s[A-Za-z0-9]+/i;
 
     data.forEach((line, index) => {
@@ -105,7 +115,8 @@ const Homepage = () => {
 
       if (line.indexOf("attacked") !== -1) processDamageLine(line, auxPlayers);
 
-      if (line.indexOf("killed") !== -1) processKillLine(line, auxPlayers);
+      if (line.indexOf("killed") !== -1)
+        processKillLine(line, auxPlayers, killFeedPerRound, auxWeapons);
 
       if (line.indexOf("SFUI_Notice_") !== -1) {
         if (
@@ -135,18 +146,27 @@ const Homepage = () => {
           return player;
         });
 
-        rounds.push(
-          new Round(roundLength, ctTeam, terroristTeam, score, winner)
+        auxRounds.push(
+          new Round(
+            roundLength,
+            ctTeam,
+            terroristTeam,
+            score,
+            winner,
+            killFeedPerRound
+          )
         );
+
+        killFeedPerRound = [];
       }
 
       if (index === 5) console.log("For this rounds, players", auxPlayers);
     });
 
-    //console.log(players); TODO: REMOVE
     setPlayers(auxPlayers);
-    //console.log(rounds);
-    return rounds;
+    setWeapons(auxWeapons);
+    console.log(auxRounds);
+    return auxRounds;
   }
 
   // The log does not provide me with a list of players and spectators, so I extract that data now.
@@ -155,8 +175,16 @@ const Homepage = () => {
   // once right here.
   // While this way is slightly less efficient than only checking the pre-match log, it accounts for cases
   // where not all players or spectators are present before the first round (for example, what if they have backups?)
-  function processKillLine(line: string, auxPlayers: Player[]) {
+  function processKillLine(
+    line: string,
+    auxPlayers: Player[],
+    killFeed: string[],
+    auxWeapons: Weapon[]
+  ) {
     const attackerPlayer = getPlayerNameFromLine(line);
+    const weaponUsed = removeQuotes(
+      line.slice(line.indexOf(" with") + 6, line.length)
+    );
 
     addPlayerIfNotPresent(attackerPlayer, auxPlayers);
 
@@ -169,6 +197,10 @@ const Homepage = () => {
     } else {
       const trimmedLine = line.slice(line.indexOf("killed"), line.length);
       const attackedPlayer = trimmedLine.slice(8, trimmedLine.indexOf("<"));
+      // This variable stores the complete kill with everyone who participated and the weapon used. Example:
+      // Brutus + Longinus killed Caesar with Knife
+      // The name of the var could stand to be more descriptive, can't think of anything better right now.
+      let completeKill: string = attackerPlayer;
 
       // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously gets and assist.
       auxPlayers = auxPlayers.map((player) => {
@@ -181,10 +213,17 @@ const Homepage = () => {
             )
           ) {
             player.assists++;
+            // If this player previously damaged the killed, then concatenate his name to the kill feed.
+            completeKill += " + " + player.name;
           }
         }
         return player;
       });
+
+      completeKill += " killed " + attackedPlayer + " using " + weaponUsed;
+      killFeed.push(completeKill);
+
+      parseWeapon(auxWeapons, weaponUsed);
     }
 
     // I only count headshots on kills, though perhaps it would be interesting to track accuracy
@@ -265,10 +304,20 @@ const Homepage = () => {
     });
   }
 
-  // If the player hasn't been added yet to the array of players, then does so
+  // If the player hasn't been added yet to the array of players, then adds it
   function addPlayerIfNotPresent(name: string, auxPlayers: Player[]) {
     if (!auxPlayers.some((player) => player.name === name))
       auxPlayers.push(new Player(name));
+  }
+
+  function parseWeapon(auxWeapons: Weapon[], weaponUsed: string) {
+    if (auxWeapons.some((weapon) => weapon.nameWithContext === weaponUsed)) {
+      auxWeapons.map((weapon) => {
+        if (weapon.nameWithContext === weaponUsed) weapon.kills++;
+      });
+    } else {
+      auxWeapons.push(new Weapon(weaponUsed));
+    }
   }
 
   return (
