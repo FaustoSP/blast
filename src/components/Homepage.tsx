@@ -27,9 +27,9 @@ const Homepage = () => {
   // We load the data from the txt file, divide it by lines with a regular expression
   // Then store it in a state variable as an array of strings
   useEffect(() => {
-    //const data = require("../data/firstRoundOnly.txt");
     // Used for testing and debugging. Leaving it here in case its useful to whoever is reviewing this.
-    const data = require("../data/NAVIvsVitaGF-Nuke.txt");
+    const data = require("../data/firstRoundOnly.txt");
+    //const data = require("../data/NAVIvsVitaGF-Nuke.txt");
     fetch(data)
       .then((response) => response.text())
       .then((text) => setRawData(text.split(/\r\n|\r|\n/)));
@@ -41,11 +41,20 @@ const Homepage = () => {
       let rounds = divideDataByRounds(data);
       setRounds(rounds);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawData]);
+
+  useEffect(() => {
+    console.log(players);
+  }, [players]);
 
   useEffect(() => {
     console.log(weapons);
   }, [weapons]);
+
+  useEffect(() => {
+    console.log(rounds);
+  }, [rounds]);
 
   // As per the hint "There might be multiple “Match_Start” events, but only the last one starts the match for real."
   // So this function eliminates all the lines preceding the last "Match_Start"
@@ -94,7 +103,7 @@ const Homepage = () => {
     // Example of a desired math: [FACEIT^] NAVI GGBET [0 - 4] TeamVitality
     // I tried to make it as generic as possible, but a team with a special character, or the score being announced
     // in a different format could break it. However, I think its good enough for the code challenge.
-    const regexScore = /[A-Za-z0-9]+\s\[[0-9]+\s-\s[0-9]+\]\s[A-Za-z0-9]+/i;
+    const regexScore = /\w+\s\[\d+\s-\s\d+\]\s\w+/i;
 
     data.forEach((line, index) => {
       if (line.indexOf("Round_Start") !== -1) {
@@ -107,29 +116,23 @@ const Homepage = () => {
       if (line.indexOf('MatchStatus: Team playing "TERRORIST":') !== -1)
         terroristTeam = line.slice(62, line.length);
 
-      if (line.indexOf("money change") !== -1)
-        processPurchaseLine(line, auxPlayers);
-
-      if (line.indexOf("left buyzone with") !== -1)
-        processLeftBuyzoneWithLine(line, auxPlayers, currentRound);
-
-      if (line.indexOf("attacked") !== -1) processDamageLine(line, auxPlayers);
-
-      if (line.indexOf("killed") !== -1)
-        processKillLine(line, auxPlayers, killFeedPerRound, auxWeapons);
+      if (
+        line.indexOf("money change") !== -1 ||
+        line.indexOf("left buyzone with") !== -1 ||
+        line.indexOf("attacked") !== -1 ||
+        line.indexOf("killed") !== -1
+      ) {
+        processPlayerStats(
+          line,
+          auxPlayers,
+          currentRound,
+          killFeedPerRound,
+          auxWeapons
+        );
+      }
 
       if (line.indexOf("SFUI_Notice_") !== -1) {
-        if (
-          line.indexOf("SFUI_Notice_Target_Bombed") !== -1 ||
-          line.indexOf("SFUI_Notice_Terrorists_Win") !== -1
-        ) {
-          winner = "Terrorists";
-        }
-        if (
-          line.indexOf("SFUI_Notice_CTs_Win") !== -1 ||
-          line.indexOf("SFUI_Notice_Bomb_Defused") !== -1
-        )
-          winner = "Counter Terrorists";
+        winner = processWinner(line);
       }
 
       // Immediately after each round ends, the admin announces the score. This is very convenient, and I take advantage
@@ -165,16 +168,40 @@ const Homepage = () => {
 
     setPlayers(auxPlayers);
     setWeapons(auxWeapons);
-    console.log(auxRounds);
     return auxRounds;
   }
 
-  // The log does not provide me with a list of players and spectators, so I extract that data now.
-  // I could use the pattern "xxx<nn><XXXXX><>" entered the game", but due to the way react set states
-  // asynchronously, attempting to set the same state twice can cause a race condition, so I only do it
-  // once right here.
-  // While this way is slightly less efficient than only checking the pre-match log, it accounts for cases
-  // where not all players or spectators are present before the first round (for example, what if they have backups?)
+  // I'm grouping all the player stats to make the code easier to read and to reduce redundancy in how many times
+  // addPlayerIfNotPresent is used. This does make the code more inefficient, but I think the trade off is worth it.
+  function processPlayerStats(
+    line: string,
+    auxPlayers: Player[],
+    currentRound: number,
+    killFeedPerRound: string[],
+    auxWeapons: Weapon[]
+  ) {
+    // My original idea was to get a list of all of the players from the pre-match data, inside the trimPreMatchData
+    // function. However, that method resulting in adding the bot and spectators in the array of players. While filtering
+    // the spectators was easy enough, finding a general pattern for the bot proved to be more challenging.
+    // In the end, I settled for doing it this way: every time I process data about player, if they weren't present before,
+    // add them. This is less efficient, but cover the case where a new player (say, a backup), enters the match mid-game.
+    const attackerPlayer = getPlayerNameFromLine(line);
+    addPlayerIfNotPresent(attackerPlayer, auxPlayers);
+
+    if (line.indexOf("money change") !== -1) {
+      processPurchaseLine(line, auxPlayers);
+    }
+    if (line.indexOf("left buyzone with") !== -1) {
+      processLeftBuyzoneWithLine(line, auxPlayers, currentRound);
+    }
+    if (line.indexOf("attacked") !== -1) {
+      processAttackLine(line, auxPlayers);
+    }
+    if (line.indexOf("killed") !== -1) {
+      processKillLine(line, auxPlayers, killFeedPerRound, auxWeapons);
+    }
+  }
+
   function processKillLine(
     line: string,
     auxPlayers: Player[],
@@ -182,72 +209,75 @@ const Homepage = () => {
     auxWeapons: Weapon[]
   ) {
     const attackerPlayer = getPlayerNameFromLine(line);
+
+    // "killed other" indicates the destruction of an object, otherwise a player was killed
+    if (line.indexOf("killed other") !== -1) {
+      auxPlayers.forEach((player) => {
+        if (player.name === attackerPlayer) player.objectsDestroyed++;
+      });
+    } else {
+      processPlayerKill(line, attackerPlayer, auxPlayers, killFeed, auxWeapons);
+    }
+  }
+
+  function processPlayerKill(
+    line: string,
+    attackerPlayer: string,
+    auxPlayers: Player[],
+    killFeed: string[],
+    auxWeapons: Weapon[]
+  ) {
+    const trimmedLine = line.slice(line.indexOf("killed"), line.length);
+    const attackedPlayer = trimmedLine.slice(8, trimmedLine.indexOf("<"));
+
     const weaponUsed = removeQuotes(
       line.slice(line.indexOf(" with") + 6, line.length)
     );
 
-    addPlayerIfNotPresent(attackerPlayer, auxPlayers);
-
-    // "killed other" indicates the destruction of an object, otherwise a player was killed
-    if (line.indexOf("killed other") !== -1) {
-      auxPlayers = auxPlayers.map((player) => {
-        if (player.name === attackerPlayer) player.objectsDestroyed++;
-        return player;
-      });
-    } else {
-      const trimmedLine = line.slice(line.indexOf("killed"), line.length);
-      const attackedPlayer = trimmedLine.slice(8, trimmedLine.indexOf("<"));
-      // This variable stores the complete kill with everyone who participated and the weapon used. Example:
-      // Brutus + Longinus killed Caesar with Knife
-      // The name of the var could stand to be more descriptive, can't think of anything better right now.
-      let completeKill: string = attackerPlayer;
-
-      // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously gets and assist.
-      auxPlayers = auxPlayers.map((player) => {
-        if (player.name === attackerPlayer) {
-          player.kills++;
-        } else {
-          if (
-            player.playersDamagedThisRound.some(
-              (previouslyDamaged) => previouslyDamaged === attackedPlayer
-            )
-          ) {
-            player.assists++;
-            // If this player previously damaged the killed, then concatenate his name to the kill feed.
-            completeKill += " + " + player.name;
-          }
-        }
-        return player;
-      });
-
-      completeKill += " killed " + attackedPlayer + " using " + weaponUsed;
-      killFeed.push(completeKill);
-
-      parseWeapon(auxWeapons, weaponUsed);
-    }
-
     // I only count headshots on kills, though perhaps it would be interesting to track accuracy
     // or a heatmap of where each player lands the most shots.
     // However, while the heatmap idea is cool, I think its too long and complex for this challenge
-    if (line.indexOf("headshot") !== -1) {
-      auxPlayers = auxPlayers.map((player) => {
-        if (player.name === attackerPlayer) player.headshots++;
-        return player;
-      });
-    }
+
+    const isHeadshot = line.indexOf("headshot") !== -1;
+    // This variable stores the complete kill with everyone who participated and the weapon used. Example:
+    // Brutus + Longinus killed Caesar with Knife
+    // The name of the var could stand to be more descriptive, can't think of anything better right now.
+    let completeKill: string = attackerPlayer;
+
+    // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously gets and assist.
+    auxPlayers.forEach((player) => {
+      if (player.name === attackerPlayer) {
+        if (isHeadshot) player.headshots++;
+        player.kills++;
+      } else {
+        if (
+          player.playersDamagedThisRound.some(
+            (previouslyDamaged) => previouslyDamaged === attackedPlayer
+          )
+        ) {
+          player.assists++;
+          // If this player previously damaged the killed, then concatenate his name to the kill feed.
+          completeKill += " + " + player.name;
+        }
+      }
+    });
+
+    completeKill += " killed " + attackedPlayer + " using " + weaponUsed;
+    killFeed.push(completeKill);
+
+    parseWeapon(auxWeapons, weaponUsed);
   }
 
-  function processDamageLine(line: string, auxPlayers: Player[]) {
+  function processAttackLine(line: string, auxPlayers: Player[]) {
     const attackerPlayer = getPlayerNameFromLine(line);
 
     // There is probably a regex expression to do this more efficiently
     const trimmedLine = line.slice(line.indexOf("attacked"), line.length);
     const attackedPlayer = trimmedLine.slice(10, trimmedLine.indexOf("<"));
 
-    addPlayerIfNotPresent(attackerPlayer, auxPlayers);
     addPlayerIfNotPresent(attackedPlayer, auxPlayers);
 
-    auxPlayers = auxPlayers.map((player) => {
+    auxPlayers.forEach((player) => {
       if (player.name === attackerPlayer) {
         if (
           !player.playersDamagedThisRound.some(
@@ -255,29 +285,24 @@ const Homepage = () => {
           )
         )
           player.playersDamagedThisRound.push(attackedPlayer);
-
-        return player;
       }
-      return player;
     });
   }
 
   function processPurchaseLine(line: string, auxPlayers: Player[]) {
     const playerName = getPlayerNameFromLine(line);
-    addPlayerIfNotPresent(playerName, auxPlayers);
 
     // I match to this patter instead of just [0-9]+ because I'm interested on money spent, not gained
     // nor the original amount before change
-    const regexMoneyNumber = /-[0-9]+/i;
+    const regexMoneyNumber = /-\d+/i;
     const moneySpentString = line
       .match(regexMoneyNumber)
       ?.toString()
       .substring(1);
     const moneySpent: number = moneySpentString ? +moneySpentString : 0;
 
-    auxPlayers = auxPlayers.map((player) => {
+    auxPlayers.forEach((player) => {
       if (player.name === playerName) player.moneySpent += moneySpent;
-      return player;
     });
   }
 
@@ -287,20 +312,15 @@ const Homepage = () => {
     round: number
   ) {
     const playerName = getPlayerNameFromLine(line);
-    addPlayerIfNotPresent(playerName, auxPlayers);
 
     // I use this regex because if I simply matched anything between bracket, it would return a ton of false positives
     // There is probably a better regex, but this is good enough. And regex is complicated.
     const regexBuyzone = /left buyzone with \[[^\]]*]/i;
     const equipment = line.match(regexBuyzone)?.toString().substring(18);
 
-    auxPlayers = auxPlayers.map((player) => {
-      // This is the simplest way to add assists. The problem is that, if a player non lethaly damages another
-      // Then finishes him or her off in a different damage instance, it will count as both a kill and an asssist
-      // I will handle this in the display component, though there is probably a better way of doing this
+    auxPlayers.forEach((player) => {
       if (player.name === playerName && equipment)
         player.leftBuyZoneWith.set(round, equipment);
-      return player;
     });
   }
 
@@ -312,12 +332,23 @@ const Homepage = () => {
 
   function parseWeapon(auxWeapons: Weapon[], weaponUsed: string) {
     if (auxWeapons.some((weapon) => weapon.nameWithContext === weaponUsed)) {
-      auxWeapons.map((weapon) => {
+      auxWeapons.forEach((weapon) => {
         if (weapon.nameWithContext === weaponUsed) weapon.kills++;
       });
     } else {
       auxWeapons.push(new Weapon(weaponUsed));
     }
+  }
+
+  function processWinner(line: string): string {
+    if (
+      line.indexOf("SFUI_Notice_Target_Bombed") !== -1 ||
+      line.indexOf("SFUI_Notice_Terrorists_Win") !== -1
+    ) {
+      return "Terrorists";
+    }
+    // As per my knowledge of CS:GO, there are only 4 win conditions so if the previous two weren't met, CT won.
+    else return "Counter Terrorists";
   }
 
   return (
