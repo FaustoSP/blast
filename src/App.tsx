@@ -5,16 +5,7 @@ import Homepage from "./components/Homepage";
 
 function App() {
   return (
-    <div
-      className="App"
-      style={{
-        backgroundColor: "#282c34",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <div className="App">
       <Homepage />
     </div>
   );

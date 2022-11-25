@@ -1,9 +1,11 @@
 import { ChronoUnit, DateTimeFormatter, LocalTime } from "@js-joda/core";
 import { useEffect, useState } from "react";
+import { Accolade } from "../classes/Accolade";
 import { Player } from "../classes/Player";
 import { Round } from "../classes/Round";
 import { Weapon } from "../classes/Weapon";
 import { getPlayerNameFromLine, removeQuotes } from "../utils/StringUtils";
+import MainMenu from "./MainMenu";
 
 // Asumption: the date and time pattern is always MM/dd/yyyy - HH:mm:ss and they are always at the start of a line
 // I think this is an ok assumption to make given that logs should always follow a specific formatting for them to be useful
@@ -14,8 +16,13 @@ function getTimeOfLine(line: string): LocalTime {
   return LocalTime.parse(line.slice(13, 21), formatter);
 }
 
-// Note that, ideally, the processing of the data would be done by a backend and exposed to the frontend via
-// an API, but for the purpose of this code challenge, and to save time, it will be done in the frontend.
+// This file is a bit of an anti-pattern. Two notes:
+// One: ideally, the processing of the data would be done by a backend and exposed to the frontend via
+// an API, but for the purpose of this code challenge, and to save time, there is no backend.
+// Two: ideally, I would separate the content producers from the consumers, so basically all of this file
+// would be a function that takes a txt and returns the players, spectators, rounds and weapons. This would
+// both improve the project's structure and reduce prop drilling. But I THINK this code challenge is more of
+// a parsing test than a React test, so I chose to spend more time on the first than the latter.
 const Homepage = () => {
   const [rawData, setRawData] = useState<string[]>([]);
   const [rounds, setRounds] = useState<Round[]>([]);
@@ -23,13 +30,14 @@ const Homepage = () => {
   // The only thing I care about the spectators is their names, so I'm not adding a whole new class for them.
   const [spectators, setSpectators] = useState<string[]>([]);
   const [weapons, setWeapons] = useState<Weapon[]>([]);
+  const [accolades, setAccolades] = useState<Accolade[]>([]);
 
   // We load the data from the txt file, divide it by lines with a regular expression
   // Then store it in a state variable as an array of strings
   useEffect(() => {
     // Used for testing and debugging. Leaving it here in case its useful to whoever is reviewing this.
-    const data = require("../data/firstRoundOnly.txt");
-    //const data = require("../data/NAVIvsVitaGF-Nuke.txt");
+    //const data = require("../data/firstRoundOnly.txt");
+    const data = require("../data/NAVIvsVitaGF-Nuke.txt");
     fetch(data)
       .then((response) => response.text())
       .then((text) => setRawData(text.split(/\r\n|\r|\n/)));
@@ -45,15 +53,15 @@ const Homepage = () => {
   }, [rawData]);
 
   useEffect(() => {
-    console.log(players);
+    //console.log(players);
   }, [players]);
 
   useEffect(() => {
-    console.log(weapons);
+    //console.log(weapons);
   }, [weapons]);
 
   useEffect(() => {
-    console.log(rounds);
+    //console.log(rounds);
   }, [rounds]);
 
   // As per the hint "There might be multiple “Match_Start” events, but only the last one starts the match for real."
@@ -98,14 +106,14 @@ const Homepage = () => {
     let auxRounds: Round[] = [];
     let auxPlayers: Player[] = [];
     let auxWeapons: Weapon[] = [];
+    let accolades: Accolade[] = [];
 
-    // Regular expression used to match the lines where an admin announces the score.
-    // Example of a desired math: [FACEIT^] NAVI GGBET [0 - 4] TeamVitality
-    // I tried to make it as generic as possible, but a team with a special character, or the score being announced
-    // in a different format could break it. However, I think its good enough for the code challenge.
+    // This regex gave me a lot of troubles. This is probably not generic enough and will likely break if a team
+    // has a special character. It also only works for tourneys run by FACEIT.
+    // It definitely needs improvement but regex is complicated and I don't want to waste too much time on it.
     const regexScore = /\w+\s\[\d+\s-\s\d+\]\s\w+/i;
 
-    data.forEach((line, index) => {
+    data.forEach((line) => {
       if (line.indexOf("Round_Start") !== -1) {
         roundStart = getTimeOfLine(line);
       }
@@ -135,19 +143,30 @@ const Homepage = () => {
         winner = processWinner(line);
       }
 
+      if (line.indexOf("ACCOLADE") !== -1) {
+        processAccolades(line, accolades);
+      }
+
       // Immediately after each round ends, the admin announces the score. This is very convenient, and I take advantage
       // by using it as the indicator that the round is over.
-      score = line.match(regexScore)?.toString();
-      if (score) {
+      if (regexScore.test(line)) {
         currentRound++;
+
         // The length is stored in seconds
-        roundLength = roundStart.until(getTimeOfLine(line), ChronoUnit.SECONDS);
+        roundLength = roundStart?.until(
+          getTimeOfLine(line),
+          ChronoUnit.SECONDS
+        );
 
         // Resets the array that keeps track of players damaged this round.
         auxPlayers = auxPlayers.map((player) => {
           player.playersDamagedThisRound = [];
           return player;
         });
+
+        // No doubt there is a regex expression that can match the score proper, which would be more generic and would save me the slice.
+        // But I have already wasted far, far too much time trying to wrangle regex into working. This will have to do.
+        score = line.slice(35, line.length);
 
         auxRounds.push(
           new Round(
@@ -162,12 +181,14 @@ const Homepage = () => {
 
         killFeedPerRound = [];
       }
-
-      if (index === 5) console.log("For this rounds, players", auxPlayers);
     });
+
+    // An example of a homemade accolade:
+    accolades.push(calculateBullChinaShopAccolade(auxPlayers));
 
     setPlayers(auxPlayers);
     setWeapons(auxWeapons);
+    setAccolades(accolades);
     return auxRounds;
   }
 
@@ -351,18 +372,47 @@ const Homepage = () => {
     else return "Counter Terrorists";
   }
 
+  function processAccolades(line: string, accolades: Accolade[]) {
+    const splittedString = line.split(",");
+    const accolade = new Accolade(
+      splittedString[1].slice(9, splittedString[1].length - 1),
+      splittedString[2].slice(1, splittedString[2].indexOf("<")),
+      parseInt(splittedString[3].slice(7, splittedString[1].length)),
+      parseInt(splittedString[4].slice(5, splittedString[1].length)),
+      parseInt(splittedString[5].slice(7, splittedString[1].length))
+    );
+    accolades.push(accolade);
+  }
+
+  function calculateBullChinaShopAccolade(players: Player[]): Accolade {
+    let max = -1;
+    let winner: string = "none";
+    players.forEach((player) => {
+      if (player.objectsDestroyed > max) {
+        max = player.objectsDestroyed;
+        winner = player.name;
+      }
+    });
+    return new Accolade("Bull in a china shop", winner, max, 1, max);
+  }
+
+  // The styling needs work.
   return (
-    <div>
-      <div>Homepage</div>
-      <p>{`The duration of the first round was: ${
-        rounds[0]?.length / 60
-      } minutes and ${rounds[0]?.length % 60} seconds`}</p>
-      <p>{`The duration of the second round was: ${
-        rounds[0]?.length / 60
-      } minutes and ${rounds[1]?.length % 60} seconds`}</p>
-      <p>{`The duration of the third round was: ${
-        rounds[0]?.length / 60
-      } minutes and ${rounds[2]?.length % 60} seconds`}</p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "#282c34",
+        height: "100%",
+      }}
+    >
+      <MainMenu
+        spectators={spectators}
+        players={players}
+        rounds={rounds}
+        weapons={weapons}
+        accolades={accolades}
+      />
     </div>
   );
 };
