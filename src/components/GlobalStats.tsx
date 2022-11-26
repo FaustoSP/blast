@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Card, Checkbox, Col, Collapse, Row, Space } from "antd";
+import { Card, Checkbox, Collapse, Space } from "antd";
 import Title from "antd/es/typography/Title";
 import { useState, useEffect } from "react";
 import { Accolade } from "../classes/Accolade";
@@ -53,7 +53,7 @@ function GlobalStats(props: GlobalStatsProps) {
   }, [props.weapons]);
 
   return (
-    <Space style={{ backgroundColor: "#282c34", flexFlow: "column" }}>
+    <Space direction="vertical">
       <div
         style={{
           display: "flex",
@@ -112,8 +112,8 @@ function GlobalStats(props: GlobalStatsProps) {
       <div>
         <Card style={{ width: "156vh" }} title={<Title>Weapon Stats</Title>}>
           <Collapse defaultActiveKey={["1"]}>
-            <Panel header="Top 5 lethal weapons" key="1">
-              {weaponsOrderedByKills.slice(5).map((weapon) => (
+            <Panel header="Top 5 causes of death" key="1">
+              {weaponsOrderedByKills.slice(0, 5).map((weapon) => (
                 <div key={weapon.nameWithContext}>
                   <Title level={4}>{weapon.nameWithContext}</Title>
                   <p>Kills: {weapon.kills}</p>

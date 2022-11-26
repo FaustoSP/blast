@@ -11,6 +11,7 @@ import { Player } from "../classes/Player";
 import { Round } from "../classes/Round";
 import { Weapon } from "../classes/Weapon";
 import { Accolade } from "../classes/Accolade";
+import RoundStats from "./RoundStats";
 
 const items: MenuProps["items"] = [
   {
@@ -72,8 +73,8 @@ function MainMenu(props: MainMenuProps) {
       ) : (
         ""
       )}
-      {current === "player" ? <Card>rounds</Card> : ""}
-      {current === "round" ? <Card>players</Card> : ""}
+      {current === "round" ? <RoundStats rounds={props.rounds} /> : ""}
+      {current === "player" ? <Card>players</Card> : ""}
     </div>
   );
 }
