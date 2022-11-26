@@ -4,13 +4,14 @@ import {
   OrderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Card, MenuProps, Menu } from "antd";
+import { MenuProps, Menu } from "antd";
 import GlobalStats from "./GlobalStats";
 import { Player } from "../classes/Player";
 import { Round } from "../classes/Round";
 import { Weapon } from "../classes/Weapon";
 import { Accolade } from "../classes/Accolade";
 import RoundStats from "./RoundStats";
+import PlayerStats from "./PlayerStats";
 
 const items: MenuProps["items"] = [
   {
@@ -73,7 +74,7 @@ function MainMenu(props: MainMenuProps) {
         ""
       )}
       {current === "round" ? <RoundStats rounds={props.rounds} /> : ""}
-      {current === "player" ? <Card>players</Card> : ""}
+      {current === "player" ? <PlayerStats players={props.players} /> : ""}
     </div>
   );
 }

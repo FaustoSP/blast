@@ -53,7 +53,7 @@ const Homepage = () => {
   }, [rawData]);
 
   useEffect(() => {
-    //console.log(players);
+    console.log(players);
   }, [players]);
 
   useEffect(() => {
@@ -267,9 +267,10 @@ const Homepage = () => {
 
     // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously gets and assist.
     auxPlayers.forEach((player) => {
+      if (player.name === attackedPlayer) player.deaths++;
       if (player.name === attackerPlayer) {
-        if (isHeadshot) player.headshots++;
         player.kills++;
+        if (isHeadshot) player.headshots++;
       } else {
         if (
           player.playersDamagedThisRound.some(
@@ -341,7 +342,7 @@ const Homepage = () => {
 
     auxPlayers.forEach((player) => {
       if (player.name === playerName && equipment)
-        player.leftBuyZoneWith.set(round, equipment);
+        player.leftBuyZoneWith.push(equipment);
     });
   }
 

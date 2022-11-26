@@ -15,7 +15,7 @@ interface GlobalStatsProps {
 }
 
 // Formats the name of the accolades into a more legible one.
-// While I coul find a name of all accolades, I could not a find a list of the internal names they have  for the logs
+// While I did find a name of all accolades, I could not a find a list of the internal names they have  for the logs
 // So this is more of a demo of how I would handle this situation.
 const accoladeNamesMap: Map<string, string> = new Map([
   ["pistolkills", "Pistol Kills"],

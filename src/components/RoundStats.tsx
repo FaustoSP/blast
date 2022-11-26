@@ -45,7 +45,6 @@ function RoundStats(props: RoundStatsProps) {
         });
       }
     }
-    console.log(data);
     setData(data);
   }, [props.rounds]);
 
