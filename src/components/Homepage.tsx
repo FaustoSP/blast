@@ -393,13 +393,7 @@ const Homepage = () => {
         winner = player.name;
       }
     });
-    return new Accolade(
-      "Bull in a china shop (most objects destroyed)",
-      winner,
-      max,
-      1,
-      max
-    );
+    return new Accolade("objectsDestroyed", winner, max, 1, max);
   }
 
   // The styling needs work.

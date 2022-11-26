@@ -14,6 +14,21 @@ interface GlobalStatsProps {
   weapons: Weapon[] | undefined;
 }
 
+// Formats the name of the accolades into a more legible one.
+// While I coul find a name of all accolades, I could not a find a list of the internal names they have  for the logs
+// So this is more of a demo of how I would handle this situation.
+const accoladeNamesMap: Map<string, string> = new Map([
+  ["pistolkills", "Pistol Kills"],
+  ["burndamage", "Burn Damage"],
+  ["firstkills", "Most first kills"],
+  ["hsp", "hsp"],
+  ["kills", "Kills"],
+  ["4k", "4K"],
+  ["3k", "3K"],
+  ["cashspent", "Most money spent"],
+  ["objectsDestroyed", "Bull in a china shop (most objects destroyed)"],
+]);
+
 function GlobalStats(props: GlobalStatsProps) {
   const [team1, setTeam1] = useState<string>("");
   const [team2, setTeam2] = useState("");
@@ -47,7 +62,8 @@ function GlobalStats(props: GlobalStatsProps) {
 
   useEffect(() => {
     if (props.weapons) {
-      let ordered = props.weapons.sort((a, b) => b.kills - a.kills);
+      // Array.sort() mutates the original array, so its good practice to copy it to another var first
+      const ordered = [...props.weapons].sort((a, b) => b.kills - a.kills);
       setWeaponsOrderedByKills(ordered);
     }
   }, [props.weapons]);
@@ -94,7 +110,9 @@ function GlobalStats(props: GlobalStatsProps) {
                   }
                 >
                   <>
-                    <Title level={4}>{accolade.name}</Title>
+                    <Title level={4}>
+                      {accoladeNamesMap.get(accolade.name)}
+                    </Title>
                     <p>
                       <UserOutlined /> {accolade.player}
                     </p>

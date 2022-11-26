@@ -1,10 +1,16 @@
 import { Round } from "../classes/Round";
-import { Card, Checkbox, Col, Collapse, List, Row, Space } from "antd";
+import { Card, Col, List, Row, Space } from "antd";
 import Title from "antd/es/typography/Title";
 import { useEffect, useState } from "react";
+import { Line } from "@ant-design/charts";
 
 interface RoundStatsProps {
   rounds: Round[] | undefined;
+}
+
+interface ChartDataType {
+  roundNumber: number;
+  kills: number;
 }
 
 function getFormattedTime(timeInSeconds: number): string {
@@ -14,7 +20,34 @@ function getFormattedTime(timeInSeconds: number): string {
 }
 
 function RoundStats(props: RoundStatsProps) {
-  const [formattedTime, setFormattedtime] = useState<string>("");
+  const [data, setData] = useState<ChartDataType[]>([]);
+
+  const chartConfig = {
+    data,
+    xField: "roundNumber",
+    yField: "kills",
+    stepType: "vh",
+    title: "Kills per round",
+    meta: {
+      roundNumber: {
+        alias: "test",
+      },
+    },
+  };
+
+  useEffect(() => {
+    let data: ChartDataType[] = [];
+    if (props.rounds) {
+      for (let i = 0; i < props.rounds.length; i++) {
+        data.push({
+          roundNumber: i + 1,
+          kills: props.rounds[i].killFeed.length,
+        });
+      }
+    }
+    console.log(data);
+    setData(data);
+  }, [props.rounds]);
 
   return (
     <Space direction="vertical">
@@ -49,7 +82,7 @@ function RoundStats(props: RoundStatsProps) {
 
             <List
               size="small"
-              header={<div>Kill feed</div>}
+              header={<Title level={5}>Kill feed</Title>}
               footer={
                 <div>Killer is the one most to the left, rest are assists</div>
               }
@@ -60,6 +93,11 @@ function RoundStats(props: RoundStatsProps) {
           </Card>
         </div>
       ))}
+      <div>
+        <Card title={<Title level={3}>Kills per round</Title>}>
+          <Line {...chartConfig} />
+        </Card>
+      </div>
     </Space>
   );
 }

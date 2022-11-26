@@ -4,8 +4,7 @@ import {
   OrderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Card, MenuProps } from "antd";
-import { Menu } from "antd";
+import { Card, MenuProps, Menu } from "antd";
 import GlobalStats from "./GlobalStats";
 import { Player } from "../classes/Player";
 import { Round } from "../classes/Round";
