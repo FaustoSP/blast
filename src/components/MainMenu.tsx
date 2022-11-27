@@ -31,7 +31,7 @@ const items: MenuProps["items"] = [
   },
 ];
 
-// I put every submenu under the same url for convenience's sake. But its also possible to assign one url
+// I put every submenu under the same url for developmen speed's sake. But its also possible to assign one url
 // to each submenu (/global, /players, /rounds) and use react router to direct the user to each section.
 
 interface MainMenuProps {
@@ -46,7 +46,6 @@ function MainMenu(props: MainMenuProps) {
   const [current, setCurrent] = useState<string>("global");
 
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 
@@ -69,6 +68,7 @@ function MainMenu(props: MainMenuProps) {
           winner={props.rounds.at(-1)?.winner}
           accolades={props.accolades}
           weapons={props.weapons}
+          spectators={props.spectators}
         />
       ) : (
         ""

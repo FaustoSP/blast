@@ -30,7 +30,7 @@ function PlayerStats(props: PlayerStatsProps) {
               <p>{`Total money spent ${player.moneySpent}`}</p>
               <Collapse defaultActiveKey={[]}>
                 <Panel header="Equipment at the start of each round" key="1">
-                  {/* The equipment string doesn't look very good, the names needs to be mapped to a more legible one */}
+                  {/* The equipment string doesn't look very good, the names need to be mapped to a more legible one */}
                   {/* and the string needs to be touched up a little. I don't think the ROI on time is worth it for the challenge, though. */}
                   {player.leftBuyZoneWith.map((equipment, index) => (
                     <>

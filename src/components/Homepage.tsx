@@ -52,19 +52,7 @@ const Homepage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawData]);
 
-  useEffect(() => {
-    console.log(players);
-  }, [players]);
-
-  useEffect(() => {
-    //console.log(weapons);
-  }, [weapons]);
-
-  useEffect(() => {
-    //console.log(rounds);
-  }, [rounds]);
-
-  // As per the hint "There might be multiple “Match_Start” events, but only the last one starts the match for real."
+  // As per the hint "There might be multiple 'Match_Start' events, but only the last one starts the match for real."
   // So this function eliminates all the lines preceding the last "Match_Start"
   function trimPreMatchData(rawData: string[]): string[] {
     let trueMatchStartIndex: number = -1;
@@ -91,8 +79,8 @@ const Homepage = () => {
   }
 
   // Divides the log into rounds. A round is defined as all the lines between "Round_Start" and "Round_End", exclusive in both cases.
-  // At the same time, also parses player statistics. I tried to minimize the amount of times I loop through the data.
-  // Note: I tried to keep the cognitive complexity of this function as low as realistically possible, but there is room for improvement
+  // I tried to minimize the amount of times I loop through the data, that's why I do it all right here.
+  // Note: I tried to keep the cognitive complexity of this function as low as realistically possible, but I'm sure there is room for improvement
   function divideDataByRounds(data: string[]): Round[] {
     let roundLength: number,
       currentRound = 1;
@@ -109,7 +97,7 @@ const Homepage = () => {
     let accolades: Accolade[] = [];
 
     // This regex gave me a lot of troubles. This is probably not generic enough and will likely break if a team
-    // has a special character. It also only works for tourneys run by FACEIT.
+    // has a special character. It also only works for tourneys run by FACEIT (because of the name of the admin).
     // It definitely needs improvement but regex is complicated and I don't want to waste too much time on it.
     const regexScore = /\w+\s\[\d+\s-\s\d+\]\s\w+/i;
 
@@ -148,7 +136,7 @@ const Homepage = () => {
       }
 
       // Immediately after each round ends, the admin announces the score. This is very convenient, and I take advantage
-      // by using it as the indicator that the round is over.
+      // of it by using it as an indicator that the round is over.
       if (regexScore.test(line)) {
         currentRound++;
 
@@ -165,7 +153,7 @@ const Homepage = () => {
         });
 
         // No doubt there is a regex expression that can match the score proper, which would be more generic and would save me the slice.
-        // But I have already wasted far, far too much time trying to wrangle regex into working. This will have to do.
+        // But I have already wasted far, far too much time trying to wrangle this specific regex into working. This will have to do.
         score = line.slice(35, line.length);
 
         auxRounds.push(
@@ -202,10 +190,10 @@ const Homepage = () => {
     auxWeapons: Weapon[]
   ) {
     // My original idea was to get a list of all of the players from the pre-match data, inside the trimPreMatchData
-    // function. However, that method resulting in adding the bot and spectators in the array of players. While filtering
+    // function. However, that method resulted in adding the bot and spectators in the array of players. While filtering
     // the spectators was easy enough, finding a general pattern for the bot proved to be more challenging.
-    // In the end, I settled for doing it this way: every time I process data about player, if they weren't present before,
-    // add them. This is less efficient, but cover the case where a new player (say, a backup), enters the match mid-game.
+    // In the end, I settled for doing it this way: every time I process data about a player, if they weren't present before,
+    // add them. This is less efficient, but covers the case where a new player (say, a backup), enters the match mid-game.
     const attackerPlayer = getPlayerNameFromLine(line);
     addPlayerIfNotPresent(attackerPlayer, auxPlayers);
 
@@ -256,16 +244,15 @@ const Homepage = () => {
     );
 
     // I only count headshots on kills, though perhaps it would be interesting to track accuracy
-    // or a heatmap of where each player lands the most shots.
+    // or a heatmap of where each player lands their shots.
     // However, while the heatmap idea is cool, I think its too long and complex for this challenge
-
     const isHeadshot = line.indexOf("headshot") !== -1;
     // This variable stores the complete kill with everyone who participated and the weapon used. Example:
     // Brutus + Longinus killed Caesar with Knife
     // The name of the var could stand to be more descriptive, can't think of anything better right now.
     let completeKill: string = attackerPlayer;
 
-    // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously gets and assist.
+    // The attacker gets the kill. Everyone who isn't the attacker AND damaged the killed previously, gets and assist.
     auxPlayers.forEach((player) => {
       if (player.name === attackedPlayer) player.deaths++;
       if (player.name === attackerPlayer) {
@@ -314,7 +301,7 @@ const Homepage = () => {
   function processPurchaseLine(line: string, auxPlayers: Player[]) {
     const playerName = getPlayerNameFromLine(line);
 
-    // I match to this patter instead of just [0-9]+ because I'm interested on money spent, not gained
+    // I match to this pattern instead of just [0-9]+ because I'm interested on money spent, not gained
     // nor the original amount before change
     const regexMoneyNumber = /-\d+/i;
     const moneySpentString = line
@@ -335,8 +322,8 @@ const Homepage = () => {
   ) {
     const playerName = getPlayerNameFromLine(line);
 
-    // I use this regex because if I simply matched anything between bracket, it would return a ton of false positives
-    // There is probably a better regex, but this is good enough. And regex is complicated.
+    // I use this regex because if I simply matched anything between brackets, it would return a ton of false positives
+    // There is probably a better one, but this is good enough. Regex is complicated.
     const regexBuyzone = /left buyzone with \[[^\]]*]/i;
     const equipment = line.match(regexBuyzone)?.toString().substring(18);
 

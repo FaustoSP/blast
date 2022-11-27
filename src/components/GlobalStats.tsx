@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Card, Checkbox, Collapse, Space } from "antd";
+import { Card, Checkbox, Collapse, Descriptions, Space } from "antd";
 import Title from "antd/es/typography/Title";
 import { useState, useEffect } from "react";
 import { Accolade } from "../classes/Accolade";
@@ -12,10 +12,11 @@ interface GlobalStatsProps {
   winner: string | undefined;
   accolades: Accolade[] | undefined;
   weapons: Weapon[] | undefined;
+  spectators: string[] | undefined;
 }
 
 // Formats the name of the accolades into a more legible one.
-// While I did find a name of all accolades, I could not a find a list of the internal names they have  for the logs
+// While I did find a name of all accolades, I could not a find a list of the internal names they have for the logs
 // So this is more of a demo of how I would handle this situation.
 const accoladeNamesMap: Map<string, string> = new Map([
   ["pistolkills", "Pistol Kills"],
@@ -86,6 +87,35 @@ function GlobalStats(props: GlobalStatsProps) {
         <Card style={{ width: "100vh" }}>
           <Title>{team2}</Title>
         </Card>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "1000px",
+          backgroundColor: "white",
+        }}
+      >
+        <Descriptions
+          title="Spectators"
+          contentStyle={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "1000px",
+          }}
+        >
+          {props?.spectators?.map((spectator) => (
+            <div key={spectator}>
+              <Descriptions.Item label="Spectator">
+                {spectator}
+              </Descriptions.Item>
+            </div>
+          ))}
+        </Descriptions>
       </div>
       <div>
         <Card
